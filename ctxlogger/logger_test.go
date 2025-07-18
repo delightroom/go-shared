@@ -31,7 +31,7 @@ func TestContextWithLogger(t *testing.T) {
 	ctx := context.Background()
 	ctx = ContextWithLogger(ctx, logger)
 
-	retrieved := LoggerFromContext(ctx, nil)
+	retrieved := LoggerFromContext(ctx)
 	if retrieved == nil {
 		t.Fatal("expected logger to be retrieved from context")
 	}
@@ -41,20 +41,9 @@ func TestContextWithLogger(t *testing.T) {
 	}
 }
 
-func TestLoggerFromContext_WithFallback(t *testing.T) {
-	fallback := &testLogger{}
-
+func TestLoggerFromContext_FallbackLogger(t *testing.T) {
 	ctx := context.Background()
-	retrieved := LoggerFromContext(ctx, fallback)
-
-	if retrieved != fallback {
-		t.Fatal("expected fallback logger to be returned")
-	}
-}
-
-func TestLoggerFromContext_WithoutFallback(t *testing.T) {
-	ctx := context.Background()
-	retrieved := LoggerFromContext(ctx, nil)
+	retrieved := LoggerFromContext(ctx)
 
 	if retrieved == nil {
 		t.Fatal("expected no-op logger to be returned")

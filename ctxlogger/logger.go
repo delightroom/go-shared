@@ -31,17 +31,17 @@ type Logger interface {
 
 type ctxLoggerKey struct{}
 
+var FallbackLogger Logger = &noOpLogger{}
+
 // LoggerFromContext 는 컨텍스트에서 로거를 추출합니다.
-// 컨텍스트에 로거가 없으면 제공된 폴백 로거를 반환합니다.
-// 폴백이 nil이면 널 로거를 반환합니다.
-func LoggerFromContext(ctx context.Context, fallback Logger) Logger {
+// 컨텍스트에 로거가 없으면 폴백 로거를 반환합니다.
+// 폴백 로거는 기본적으로 no-op 로거이며, global 변수로 선언되어 있으므로 변경 가능합니다.
+// 예) `ctxlogger.FallbackLogger = zap.NewExample()`
+func LoggerFromContext(ctx context.Context) Logger {
 	if l, ok := ctx.Value(ctxLoggerKey{}).(Logger); ok {
 		return l
 	}
-	if fallback != nil {
-		return fallback
-	}
-	return &noOpLogger{}
+	return FallbackLogger
 }
 
 // ContextWithLogger 는 로거를 컨텍스트에 추가합니다.

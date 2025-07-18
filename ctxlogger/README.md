@@ -46,8 +46,8 @@ func main() {
 
 ```go
 func ProcessRequest(ctx context.Context) {
-    // 컨텍스트에서 로거 가져오기 (폴백 포함)
-    logger := ctxlogger.LoggerFromContext(ctx, nil)
+    // 컨텍스트에서 로거 가져오기
+    logger := ctxlogger.LoggerFromContext(ctx)
     
     logger.Info("요청 처리 시작")
     logger.Debug("디버그 정보", "key", "value")
@@ -56,6 +56,12 @@ func ProcessRequest(ctx context.Context) {
         log.Error("처리 실패", "error", err)
     }
 }
+```
+
+### 폴백 로거 변경
+
+```go
+ctxlogger.FallbackLogger = zap.NewExample()
 ```
 
 ## 로거 인터페이스

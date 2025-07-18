@@ -15,7 +15,7 @@ go get github.com/delightroom/go-shared/ctxlogger
 
 ## 사용법
 
-### 기본 사용법 (ZapLogger 사용 예시)
+### 기본 사용법 (Slog 사용 예시)
 
 ```go
 package main
@@ -26,14 +26,14 @@ import (
 )
 
 func main() {
-    // 새로운 ZapLogger 로거 생성
-    zapLogger := zap.New().Sugar()
+    // 새로운 Slog 로거 생성
+    slogLogger := ctxlogger.NewSlog()
     
     // 컨텍스트에 로거 추가
-    ctx := ctxlogger.ContextWithLogger(context.Background(), zapLogger)
+    ctx := ctxlogger.ContextWithLogger(context.Background(), slogLogger)
     
     // 컨텍스트에서 로거 추출
-    logger := ctxlogger.LoggerFromContext(ctx, nil)
+    logger := ctxlogger.LoggerFromContext(ctx)
     logger.Info("컨텍스트 로거에서 안녕하세요")
     
     // 추가 필드가 있는 자식 로거 생성

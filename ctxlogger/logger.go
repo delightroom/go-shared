@@ -1,3 +1,5 @@
+// Package ctxlogger 는 컨텍스트 기반 로거 패키지입니다.
+// 로거 인터페이스와 컨텍스트 기반 로거 관리 기능을 제공합니다.
 package ctxlogger
 
 import (
